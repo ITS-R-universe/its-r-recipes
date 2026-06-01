@@ -1,28 +1,54 @@
-export default function Home() {
+'use client'
+import { useState, useEffect } from 'react'
+
+export default function Page() {
+  const [dark, setDark] = useState(true)
+
+  useEffect(() => {
+    const t = localStorage.getItem('its-r-theme')
+    const isDark = t !== 'light'
+    setDark(isDark)
+    if (!isDark) document.documentElement.setAttribute('data-theme', 'light')
+  }, [])
+
+  const toggleTheme = () => {
+    const next = !dark
+    setDark(next)
+    if (next) { document.documentElement.removeAttribute('data-theme'); localStorage.setItem('its-r-theme', 'dark') }
+    else { document.documentElement.setAttribute('data-theme', 'light'); localStorage.setItem('its-r-theme', 'light') }
+  }
+
   return (
-    <div style={{maxWidth:'1200px',margin:'0 auto',padding:'4rem 2rem'}}>
-      <div style={{textAlign:'center',marginBottom:'3rem'}}>
-        <h1 style={{fontSize:'2.5rem',fontWeight:'bold',marginBottom:'1rem'}}>
-          <span style={{color:'#d4af37'}}>ITS-R</span>
-          <span style={{color:'#f8fafc'}}> Recipes</span>
-        </h1>
-        <p style={{color:'#94a3b8',fontSize:'1.125rem',maxWidth:'600px',margin:'0 auto'}}>
-          Utility and productivity tools — ITS-R Universe
-        </p>
-      </div>
-      <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',gap:'1.5rem'}}>
-        {['Feature 1','Feature 2','Feature 3'].map((f,i)=>(
-          <div key={i} style={{background:'#0d1117',border:'1px solid #1e293b',borderRadius:'0.75rem',padding:'1.5rem'}}>
-            <div style={{color:'#d4af37',fontWeight:'600',marginBottom:'0.5rem'}}>{f}</div>
-            <div style={{color:'#94a3b8',fontSize:'0.875rem'}}>Coming soon — ITS-R Universe</div>
+    <div style={{ minHeight: '100vh', background: 'var(--bg)', color: 'var(--text)', display: 'flex', flexDirection: 'column', fontFamily: 'system-ui,sans-serif' }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', borderBottom: '1px solid var(--border)' }}>
+        <a href="https://its-r-portal.vercel.app" style={{ color: 'var(--gold)', fontWeight: 800, fontSize: '1rem' }}>
+          ← ITS-R Universe
+        </a>
+        <span style={{ color: 'var(--gold)', fontWeight: 700 }}>🍳 Recipes</span>
+        <button onClick={toggleTheme} style={{ background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text)', padding: '0.4rem 0.75rem', borderRadius: '0.5rem', cursor: 'pointer', fontSize: '0.8rem' }}>
+          {dark ? '☀️ Day' : '🌙 Night'}
+        </button>
+      </nav>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
+        <div style={{ textAlign: 'center', maxWidth: 480 }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🍳</div>
+          <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text)' }}>Recipes</h1>
+          <p style={{ color: 'var(--sub)', marginBottom: '2rem', lineHeight: 1.6 }}>
+            Part of ITS-R Universe — a digital civilization of 2,213 services.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href="https://its-r-passport.vercel.app/login" style={{ padding: '0.75rem 1.5rem', background: 'var(--gold)', color: '#000', fontWeight: 700, borderRadius: '0.5rem', fontSize: '0.9rem' }}>
+              🛂 Sign in with ITS-R Passport
+            </a>
+            <a href="https://its-r-portal.vercel.app" style={{ padding: '0.75rem 1.5rem', background: 'var(--card)', border: '1px solid var(--border)', color: 'var(--text)', fontWeight: 600, borderRadius: '0.5rem', fontSize: '0.9rem' }}>
+              🌐 Back to Portal
+            </a>
           </div>
-        ))}
+        </div>
       </div>
-      <div style={{textAlign:'center',marginTop:'3rem'}}>
-        <span style={{display:'inline-block',background:'#d4af37',color:'#0a0a0f',padding:'0.5rem 1.5rem',borderRadius:'0.5rem',fontWeight:'600',fontSize:'0.875rem'}}>
-          Part of ITS-R Universe
-        </span>
-      </div>
+      <footer style={{ textAlign: 'center', padding: '1.5rem', borderTop: '1px solid var(--border)', color: 'var(--sub)', fontSize: '0.8rem' }}>
+        ITS-R Universe | In loving memory of Roshan Ali Sahab 🤲
+      </footer>
     </div>
   )
 }
